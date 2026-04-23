@@ -34,7 +34,10 @@
       "Bash(xargs grep *)",
       "Bash(grep -v \"^$\")",
       "Bash(git rm *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(grep -E \"\\\\.env$|\\\\.env\\\\.|vendor/|node_modules/\")",
+      "Bash(git config *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
