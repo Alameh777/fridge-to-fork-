@@ -1,0 +1,34 @@
+HOW TO RUN - Fridge to Fork
+============================
+
+OPTION A: Development mode (with hot reload)
+---------------------------------------------
+Open TWO terminals, both in: D:/sofretna/fridge-to-fork
+
+Terminal 1 (Laravel backend):
+    php artisan serve
+
+Terminal 2 (Vite frontend):
+    npm run dev
+
+Then open: http://localhost:8000
+
+
+OPTION B: Production mode (no hot reload, faster)
+--------------------------------------------------
+Open ONE terminal in: D:/sofretna/fridge-to-fork
+
+Step 1 - Build frontend (only needed after code changes):
+    npm run build
+
+Step 2 - Start server:
+    php artisan serve
+
+Then open: http://localhost:8000
+
+
+NOTES
+-----
+- Default port is 8000. To use a different port: php artisan serve --port=9000
+- Make sure your .env file has GEMINI_API_KEY set for AI features to work
+- Database is SQLite, file is at: database/database.sqlite

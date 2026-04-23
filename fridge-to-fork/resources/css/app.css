@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.jsx';
+
+@theme {
+    --font-sans: 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+    --font-arabic: 'Cairo', 'Amiri', sans-serif;
+
+    --color-orange-50: #fff7ed;
+    --color-orange-100: #ffedd5;
+    --color-orange-400: #f5a05a;
+    --color-orange-500: #ea7c2b;
+    --color-orange-600: #c4611a;
+    --color-orange-700: #9a4a10;
+
+    --color-green-50: #f0f7f2;
+    --color-green-100: #d1e8d8;
+    --color-green-400: #6aa87a;
+    --color-green-500: #4a7c59;
+    --color-green-600: #2d5c3a;
+
+    --color-cream-50: #fdf8f0;
+    --color-cream-100: #f9f0e0;
+    --color-cream-200: #f0dfc0;
+}
+
+@layer base {
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        background-color: var(--color-cream-50);
+        color: #2d1f14;
+        -webkit-tap-highlight-color: transparent;
+        overscroll-behavior: none;
+    }
+    html[dir="rtl"] body {
+        font-family: var(--font-arabic);
+    }
+}
+
+@layer utilities {
+    .gradient-orange {
+        background: linear-gradient(135deg, #ea7c2b 0%, #f5a05a 100%);
+    }
+    .gradient-green {
+        background: linear-gradient(135deg, #4a7c59 0%, #6aa87a 100%);
+    }
+    .card-shadow {
+        box-shadow: 0 2px 12px rgba(100, 50, 10, 0.10);
+    }
+    .safe-bottom {
+        padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}

@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+@source '../**/*.jsx';
+
+@theme {
+    --color-orange-500: #ea7c2b;
+    --color-orange-600: #c4611a;
+}

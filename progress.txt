@@ -1,0 +1,108 @@
+FRIDGE TO FORK — PROJECT PROGRESS
+===================================
+Last Updated: 2026-04-23
+
+STRUCTURE
+---------
+Backend:    D:/Sofretna/fridge-to-fork           (Laravel 12 API, port 8000)
+Frontend:   D:/Sofretna/fridge-to-fork-frontend  (React + Vite, port 5173)
+Admin Panel: D:/Sofretna/fridge-to-fork-admin    (React + Vite, port 5174)
+
+HOW TO RUN
+----------
+Terminal 1 (backend):
+  cd D:/Sofretna/fridge-to-fork
+  php artisan serve
+
+Terminal 2 (frontend):
+  cd D:/Sofretna/fridge-to-fork-frontend
+  npm run dev
+
+Terminal 3 (admin panel):
+  cd D:/Sofretna/fridge-to-fork-admin
+  npm run dev
+
+Frontend:    http://localhost:5173
+Admin Panel: http://localhost:5174
+
+To make a user an admin:
+  php artisan admin:make user@email.com
+
+WHAT'S DONE
+-----------
+
+INFRASTRUCTURE
+[x] Separated React frontend from Laravel (was monorepo, now 3 separate projects)
+[x] Laravel configured as API-only backend
+[x] CORS configured (allows localhost:5173 and localhost:5174)
+[x] Database: SQLite (file: database/database.sqlite)
+[x] Vite proxy: /api on port 5173 → forwarded to port 8000
+[x] Auth (register/login/logout) working with Sanctum tokens
+[x] localStorage key isolation: mobile uses "token", admin uses "admin_token"
+
+AUTH & UI
+[x] Login page redesigned (split layout, orange branding panel, show/hide password)
+[x] Register page redesigned (same style, fixed uncontrolled input + password match bugs)
+
+AI / RECIPE GENERATION
+[x] Switched from Gemini to Groq API (endpoint: https://api.groq.com/openai/v1)
+[x] Model: llama-3.3-70b-versatile (was llama-3.1-8b-instant, too small → 503 errors)
+[x] Returns 3 recipes per generation (was 7, caused payload too large errors)
+[x] AI prompt includes user dietary profile (allergies, halal, vegetarian, vegan, ramadan, cultural background)
+[x] Backend returns proper 503 error when Groq fails; frontend shows it as a toast
+
+RECIPE DETAIL PAGE
+[x] Fixed empty page bug — API returns recipe at .data not .data.recipe
+
+COMMUNITY PAGE
+[x] Community posts: photo + caption + attached recipe card
+[x] Posts visible to everyone (public feed)
+[x] Like system: one like per user, heart turns red when liked (pivot table: community_post_likes)
+[x] Comments system: bottom sheet, add/delete own comments
+[x] Delete post: only the post owner sees the trash icon (Number() coercion fix for id comparison)
+[x] Two-tap confirm before deleting a post or comment
+[x] CreatePostSheet: photo picker (base64), caption textarea, recipe search & attach
+[x] CommentsSheet: loads comments, scrolls to bottom on new comment, owner can delete
+
+PROFILE PAGE
+[x] Dietary preference toggles: Halal, Vegetarian, Vegan, Ramadan Mode
+[x] Allergies section: 9 common allergen chips (Peanuts, Tree Nuts, Dairy, Gluten, Eggs, Shellfish, Fish, Soy, Sesame)
+[x] Custom allergy input with Plus button and Enter key support
+[x] Allergies auto-save when toggled (600ms debounce) — no need to press Save manually
+[x] Cultural background: 11 quick-select chips (Moroccan, Algerian, Tunisian, Egyptian, Lebanese, Turkish, Pakistani, Indian, French, Italian, Other)
+[x] Save Preferences button for dietary prefs + cultural background
+[x] Cultural background defaults to none (removed hardcoded 'moroccan' default)
+[x] "My Posts" section: shows all user posts with delete (two-tap confirm)
+[x] Admin panel link shown only to admin users
+
+ADMIN PANEL (standalone app on port 5174)
+[x] Separate React app with its own axios instance (uses admin_token)
+[x] Login page — validates is_admin flag, blocks non-admin accounts
+[x] Dashboard: 4 stat cards (total users, posts, recipes, likes)
+[x] Users page: searchable table, delete users (can't delete admins), admin badge shown
+[x] Posts page: Photo | Caption (full text) | Author | Likes | Comments | Date | Delete
+[x] Inline comments panel: expand per post, view all comments with author + timestamp, delete comments
+[x] AdminMiddleware: blocks non-admin tokens from all /admin/* routes
+[x] Artisan command: php artisan admin:make {email}
+
+DATABASE (notable migrations)
+[x] community_posts.image → mediumText (base64 photos)
+[x] community_post_likes (pivot): user_id, community_post_id, composite PK
+[x] users.is_admin: boolean, default false
+[x] post_comments: community_post_id, user_id, body
+[x] user_profiles.allergies: JSON column
+[x] user_profiles.cultural_background: nullable (was hardcoded default 'moroccan')
+
+BUGS FIXED
+[x] Groq 503: model too small for prompt → switched to llama-3.3-70b-versatile
+[x] Recipe detail empty page: .data.recipe → .data
+[x] CreatePostSheet button hidden on mobile: raised z-index above BottomNav (z-[70])
+[x] Like button allowing multiple likes: added pivot table + toggle logic
+[x] Delete button visible to all users: === failing on string/number mismatch → Number() coercion
+[x] Allergies not saving: empty cultural_background sent as "" → Laravel converts to null → failed 'string' validation → entire request rejected. Fixed with 'nullable' on the rule.
+
+TECH STACK
+----------
+Frontend:  React 19, Vite 8, TailwindCSS 4, React Router 7, Axios, react-hot-toast, i18next, lucide-react
+Backend:   Laravel 12, Sanctum (token auth), SQLite, Groq AI API (OpenAI-compatible)
+Admin:     React 19, Vite, TailwindCSS 4, React Router, Axios, lucide-react
