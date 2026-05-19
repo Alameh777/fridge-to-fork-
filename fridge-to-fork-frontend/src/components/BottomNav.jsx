@@ -1,13 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Camera, BookOpen, Users, User } from 'lucide-react';
+import { Camera, ShoppingBasket, BookOpen, Users, User } from 'lucide-react';
 
 const tabs = [
-  { path: '/', icon: Camera, key: 'scan' },
-  { path: '/library', icon: BookOpen, key: 'library' },
-  { path: '/community', icon: Users, key: 'community' },
-  { path: '/profile', icon: User, key: 'profile' },
+  { path: '/',          icon: Camera,          key: 'scan'      },
+  { path: '/pantry',    icon: ShoppingBasket,  key: 'pantry'    },
+  { path: '/library',   icon: BookOpen,        key: 'library'   },
+  { path: '/community', icon: Users,           key: 'community' },
+  { path: '/profile',   icon: User,            key: 'profile'   },
 ];
 
 export default function BottomNav() {

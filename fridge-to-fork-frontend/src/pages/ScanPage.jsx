@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Camera, Plus, Zap } from 'lucide-react';
 import api from '../lib/axios';
 import TopBar from '../components/TopBar';
@@ -17,12 +17,20 @@ const DIET_FILTERS = [
 export default function ScanPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const fileRef = useRef();
   const [ingredients, setIngredients] = useState([]);
   const [inputVal, setInputVal] = useState('');
   const [scanning, setScanning] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [activeFilters, setActiveFilters] = useState({});
+
+  // Load pantry ingredients if navigated from PantryPage
+  useEffect(() => {
+    if (state?.pantryIngredients?.length) {
+      setIngredients(prev => [...new Set([...prev, ...state.pantryIngredients])]);
+    }
+  }, []);
 
   const toggleFilter = (key) => {
     setActiveFilters(prev =>

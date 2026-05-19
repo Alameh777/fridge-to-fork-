@@ -16,6 +16,7 @@ const en = {
   sign_in: 'Sign In',
   // Nav
   scan: 'Scan',
+  pantry: 'Pantry',
   library: 'Library',
   community: 'Community',
   profile: 'Profile',
@@ -86,6 +87,7 @@ const ar = {
   sign_up: 'إنشاء حساب',
   sign_in: 'تسجيل الدخول',
   scan: 'المسح',
+  pantry: 'المخزن',
   library: 'مكتبتي',
   community: 'المجتمع',
   profile: 'الملف الشخصي',

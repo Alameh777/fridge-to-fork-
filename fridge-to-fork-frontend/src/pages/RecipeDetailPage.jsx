@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Bookmark, BookmarkCheck, Clock, Users, ChefHat } from 'lucide-react';
+import { ArrowLeft, Bookmark, BookmarkCheck, Clock, Users, ChefHat, Utensils } from 'lucide-react';
 import api from '../lib/axios';
 import DietaryBadge from '../components/DietaryBadge';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -94,6 +94,16 @@ export default function RecipeDetailPage() {
             recipe[k] ? <DietaryBadge key={k} type={k} isAr={isAr} /> : null
           )}
         </div>
+
+        {/* Start Cooking button */}
+        <button
+          onClick={() => navigate(`/cook/${recipe.id}`, { state: { recipe } })}
+          className="w-full flex items-center justify-center gap-2.5 py-4 rounded-2xl text-white font-bold text-base shadow-md active:scale-95 transition-transform"
+          style={{ background: 'linear-gradient(135deg, #ea7c2b 0%, #c4611a 100%)' }}
+        >
+          <Utensils size={20} />
+          Start Cooking
+        </button>
 
         <div className="flex gap-4 text-sm text-gray-500">
           {recipe.prep_time && <span className="flex items-center gap-1"><Clock size={14} />{t('prep_time')}: {recipe.prep_time}m</span>}

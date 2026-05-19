@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\CommunityController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\PantryController;
 use App\Http\Controllers\Api\RecipeController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // Comments
     Route::post('/community/{post}/comments', [CommentController::class, 'store']);
     Route::delete('/community/{post}/comments/{comment}', [CommentController::class, 'destroy']);
+
+    // Pantry (fixed routes before wildcard)
+    Route::get('/pantry', [PantryController::class, 'index']);
+    Route::post('/pantry', [PantryController::class, 'store']);
+    Route::get('/pantry/expiring-soon', [PantryController::class, 'expiringSoon']);
+    Route::put('/pantry/{pantryItem}', [PantryController::class, 'update']);
+    Route::delete('/pantry/{pantryItem}', [PantryController::class, 'destroy']);
 });
 
 // Admin routes

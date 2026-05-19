@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Barcodes — Sofretna</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #fdf8f0; padding: 24px; }
+    h1 { font-size: 20px; font-weight: 700; color: #2d1f14; margin-bottom: 6px; }
+    p  { font-size: 13px; color: #888; margin-bottom: 28px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 24px 20px 20px;
+      box-shadow: 0 2px 12px rgba(100,50,10,.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .card svg { max-width: 100%; }
+    .label { font-size: 14px; font-weight: 700; color: #2d1f14; text-align: center; }
+    .sub   { font-size: 11px; color: #aaa; font-family: monospace; }
+    .tip   {
+      margin-top: 32px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 13px;
+      color: #92400e;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sofretna — Test Barcodes</h1>
+  <p>Open this page on your computer screen and scan it with the Sofretna app.</p>
+
+  <div class="grid">
+    <div class="card">
+      <svg id="bc1"></svg>
+      <div class="label">Nutella 400g</div>
+      <div class="sub">3017620422003</div>
+    </div>
+    <div class="card">
+      <svg id="bc2"></svg>
+      <div class="label">Coca-Cola 330ml</div>
+      <div class="sub">5449000000996</div>
+    </div>
+    <div class="card">
+      <svg id="bc3"></svg>
+      <div class="label">Lay's Classic</div>
+      <div class="sub">0028400589079</div>
+    </div>
+    <div class="card">
+      <svg id="bc4"></svg>
+      <div class="label">Oreo Original</div>
+      <div class="sub">0044000032449</div>
+    </div>
+    <div class="card">
+      <svg id="bc5"></svg>
+      <div class="label">Heinz Ketchup</div>
+      <div class="sub">0013000006408</div>
+    </div>
+    <div class="card">
+      <svg id="bc6"></svg>
+      <div class="label">Pringles Original</div>
+      <div class="sub">0038000845031</div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong>How to test:</strong> Open the Sofretna app → Pantry → + → Scan product barcode.
+    Then point your camera at any barcode above. The product name, brand, and calories will be filled in automatically.
+    <br><br>
+    <strong>Tip:</strong> Hold the camera steady about 15–25 cm from the screen. Make sure the barcode fills the viewfinder.
+  </div>
+
+  <script>
+    const opts = {
+      format: 'EAN13',
+      width: 2,
+      height: 80,
+      displayValue: true,
+      fontSize: 14,
+      margin: 10,
+      background: '#ffffff',
+      lineColor: '#000000',
+    };
+    JsBarcode('#bc1', '3017620422003', opts);
+    JsBarcode('#bc2', '5449000000996', opts);
+    JsBarcode('#bc3', '0028400589079', { ...opts, format: 'UPC' });
+    JsBarcode('#bc4', '0044000032449', { ...opts, format: 'UPC' });
+    JsBarcode('#bc5', '0013000006408', { ...opts, format: 'UPC' });
+    JsBarcode('#bc6', '0038000845031', { ...opts, format: 'UPC' });
+  </script>
+</body>
+</html>

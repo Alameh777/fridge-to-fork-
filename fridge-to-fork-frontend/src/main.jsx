@@ -1,6 +1,6 @@
 import { Component, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './i18n/index';
@@ -9,7 +9,10 @@ import BottomNav from './components/BottomNav';
 import LoadingSpinner from './components/LoadingSpinner';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import LandingPage from './pages/LandingPage';
 import ScanPage from './pages/ScanPage';
+import PantryPage from './pages/PantryPage';
+import CookingModePage from './pages/CookingModePage';
 import ResultsPage from './pages/ResultsPage';
 import RecipeDetailPage from './pages/RecipeDetailPage';
 import LibraryPage from './pages/LibraryPage';
@@ -36,7 +39,13 @@ class ErrorBoundary extends Component {
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingSpinner />;
-  return user ? children : <Navigate to="/login" replace />;
+  return user ? children : <Navigate to="/" replace />;
+}
+
+function HomeRoute() {
+  const { user, loading } = useAuth();
+  if (loading) return <LoadingSpinner />;
+  return user ? <ScanPage /> : <LandingPage />;
 }
 
 function GuestRoute({ children }) {
@@ -47,12 +56,16 @@ function GuestRoute({ children }) {
 
 function AppRoutes() {
   const { user } = useAuth();
+  const { pathname } = useLocation();
+  const hideNav = pathname.startsWith('/cook/');
   return (
     <>
       <Routes>
         <Route path="/login" element={<GuestRoute><LoginPage /></GuestRoute>} />
         <Route path="/register" element={<GuestRoute><RegisterPage /></GuestRoute>} />
-        <Route path="/" element={<PrivateRoute><ScanPage /></PrivateRoute>} />
+        <Route path="/" element={<HomeRoute />} />
+        <Route path="/pantry" element={<PrivateRoute><PantryPage /></PrivateRoute>} />
+        <Route path="/cook/:id" element={<PrivateRoute><CookingModePage /></PrivateRoute>} />
         <Route path="/results" element={<PrivateRoute><ResultsPage /></PrivateRoute>} />
         <Route path="/recipe/:id" element={<PrivateRoute><RecipeDetailPage /></PrivateRoute>} />
         <Route path="/library" element={<PrivateRoute><LibraryPage /></PrivateRoute>} />
@@ -60,7 +73,7 @@ function AppRoutes() {
         <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      {user && <BottomNav />}
+      {user && !hideNav && <BottomNav />}
     </>
   );
 }
