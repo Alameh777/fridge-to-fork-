@@ -20,7 +20,7 @@ export default function Sidebar() {
                         <ChefHat size={18} className="text-white" />
                     </div>
                     <div>
-                        <p className="font-bold text-gray-900 text-sm leading-none">Fridge to Fork</p>
+                        <p className="font-bold text-gray-900 text-sm leading-none">Sofretna</p>
                         <p className="text-xs text-orange-500 font-medium">Admin Panel</p>
                     </div>
                 </div>

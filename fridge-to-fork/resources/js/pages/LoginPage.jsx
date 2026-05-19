@@ -29,8 +29,8 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <p className="text-6xl mb-3">🍽️</p>
-          <h1 className="text-3xl font-bold text-gray-900">Fridge to Fork</h1>
-          <p className="text-gray-500 mt-1 text-sm">طعام من الثلاجة</p>
+          <h1 className="text-3xl font-bold text-gray-900">Sofretna</h1>
+          <p className="text-gray-500 mt-1 text-sm">سفرة · Your dining table</p>
         </div>
         <form onSubmit={submit} className="space-y-4">
           <div>
